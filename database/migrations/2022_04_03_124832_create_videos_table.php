@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('description');
             $table->string('video_url');
             $table->string('banner');
-            $table->integer('views')->default(0);
             $table->string('video_category');
             $table->string('video_subcategory')->nullable();
             $table->string('video_tags')->nullable();

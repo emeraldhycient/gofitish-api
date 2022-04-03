@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models;
 
-class UsersController extends Controller
+class VideoCategory extends Controller
 {
     //
 }
