@@ -41,7 +41,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function signIn (Request $request)
+    public function login (Request $request)
     {
         $account = $request->validate([
             'email' => 'required|string|email|max:255',
