@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,17 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 //using middleware
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/profile', function(Request $request) {
-        return auth()->user();
-    });
-    Route::post('/sign-out', [AuthenticationController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'signOut']);
 });
 
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-*/
+
 
 Route::get('/', function () {
     return response()->json([
@@ -34,20 +30,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::post('/tokens/create', function (Request $request) {
-   // $token = $request->user()->createToken($request->token_name);
-    return  ["request" => $request->user()];
-   // return ['token' => $token->plainTextToken];
-});
 
-Route::post('/create-account', function () {
-    return response()->json([
-        'message' => 'details received successfully.',
-    ]);
-});
+Route::post('/create-account', [AuthController::class, 'createaccount']);
 
-Route::post('/login', function () {
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/login',function (){
     return response()->json([
-        'message' => 'details received successfully.',
+        'message' => 'Welcome to the Gofitish API. please login',
     ]);
 });

@@ -17,12 +17,12 @@ class AuthController extends Controller
         $account = $request->validate([
             'fullname' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'phone' => 'required|digit:11',
+            'phone' => 'required',
             'address' => 'string|max:255',
             'country' => 'required|string|max:255',
             'shop_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
@@ -36,9 +36,13 @@ class AuthController extends Controller
             'password' => Hash::make($account['password']),
         ]);
 
-        return $this->success([
+      return  response([
+            'status' => 'success',
+            'user' => $user,
             'token' => $user->createToken('tokens')->plainTextToken
-        ]);
+        ],200);
+
+        
     }
 
     public function login (Request $request)
@@ -49,7 +53,10 @@ class AuthController extends Controller
         ]);
 
         if (!auth()->attempt($account)) {
-            return $this->error('Invalid credentials');
+            return [
+                'status' => 'failed',
+                'message' => 'invalid email address'
+            ];
         }
 
         $user = User::where('email', $request->email)->first();
@@ -60,18 +67,23 @@ class AuthController extends Controller
             ]);
         }
      
-        return $this->success([
+        return  response([
+            'status' => 'success',
+            'user' => $user,
             'token' => $user->createToken('tokens')->plainTextToken
-        ]);
+        ],200);
     }
 
     public function signOut(Request $request)
     {
-        $request->user()->token()->revoke();
+      //  auth('sanctum')->user()->token()->delete();
+      auth()->user()->tokens()->delete();
+
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Successfully logged out',
-        ]);
+        ],200);
     }
    
 
