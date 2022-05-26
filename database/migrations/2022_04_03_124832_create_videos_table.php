@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string('video_id')->unique();
-            $table->string('title');
-            $table->string('description');
+            $table->text('title');
+            $table->longText('description');
             $table->string('video_url');
-            $table->string('banner');
+            $table->string('poster_url');
             $table->string('video_category');
-            $table->string('video_subcategory')->nullable();
+           $table->string('video_subcategory')->nullable();
             $table->string('video_tags')->nullable();
             $table->string('uploader_id');
             $table->string('uploader_name');
