@@ -100,6 +100,7 @@ class VideosController extends Controller
     public static function uploadVideo(Request $request)
     {
 
+
         $validate = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -116,11 +117,17 @@ class VideosController extends Controller
         $poster_path = null;
 
         if($request->hasFile('video') && $request->hasFile('poster')){
+           //upload to cloudinary
+           $vidname = time().Str::random(5);
+           $video_path = $request->video->storeOnCloudinaryAs('videos', $vidname)->getSecurePath();
+           $postername = time().Str::random(5);
+           $poster_path = $request->poster->storeOnCloudinaryAs('images', $postername)->getSecurePath();
+            /*to upload video and pictures locally 
             $video_path = time().Str::random(5).'.'.$request->video->extension();
             $request->video->move(public_path('videos'), $video_path);
 
             $poster_path = time().Str::random(5).'.'.$request->poster->extension();
-            $request->poster->move(public_path('images'), $poster_path);
+            $request->poster->move(public_path('images'), $poster_path); */
         }
 
         $video = Videos::create([
@@ -135,6 +142,7 @@ class VideosController extends Controller
             'uploader_id' => $request->uploader_id,
             'uploader_name' => $request->uploader_name,
         ]);
+        
       
         return response()->json([
             'message'=>'video uploaded successfully',
