@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 
 
@@ -18,18 +21,19 @@ class AuthController extends Controller
             'fullname' => 'required|string|max:255',
             'username' => 'required|string|max:255',
             'phone' => 'required',
-            'address' => 'string|max:255',
             'country' => 'required|string|max:255',
             'shop_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6',
         ]);
 
+        $userid = Str::random(7).now();
+
         $user = User::create([
+            'user_id'=> $userid,
             'fullname' => $account['fullname'],
             'username' => $account['username'],
             'phone' => $account['phone'],
-            'address' => $account['address'],
             'country' => $account['country'],
             'shop_name' => $account['shop_name'],
             'email' => $account['email'],
@@ -39,6 +43,7 @@ class AuthController extends Controller
       return  response([
             'status' => 'success',
             'user' => $user,
+            'message' => 'Account created successfully',
             'token' => $user->createToken('tokens')->plainTextToken
         ],200);
 
@@ -70,6 +75,7 @@ class AuthController extends Controller
         return  response([
             'status' => 'success',
             'user' => $user,
+            'message' => 'login successful',
             'token' => $user->createToken('tokens')->plainTextToken
         ],200);
     }

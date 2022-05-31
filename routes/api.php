@@ -21,7 +21,7 @@ use App\Http\Controllers\VideosController;
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logout', [AuthController::class, 'signOut']);
     // upload video
-    //Route::post('/videos/upload', [VideosController::class, 'uploadVideo']);
+    Route::post('/videos/upload', [VideosController::class, 'uploadVideo']);
 });
 
 
@@ -51,11 +51,7 @@ Route::get('/videos/cat/{cat}/{subcat}', [VideosController::class, 'getVideosByS
 //get 1 video by id
 Route::get('/videos/single/{id}', [VideosController::class, 'getVideo']);
 //get videos by user
-Route::get('/user/videos/{id}', [VideosController::class, 'getVideosByUser']);
-
-//Route::get('/videos/{id}/{cat}/{subcat}', [VideosController::class, 'getVideosBySubCategory']);
-
-Route::post('/videos/upload', [VideosController::class, 'uploadVideo']);
+Route::get('/videos/user/{id}', [VideosController::class, 'getVideosByUser']);
 
 //search for a video
 Route::get('/videos/search/{query}', [VideosController::class, 'searchVideo']);
