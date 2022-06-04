@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('markets', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('product_id');
             $table->string('product_name');
             $table->string('product_description');
             $table->string('product_image');

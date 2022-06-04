@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VideosController;
+use App\Http\Controllers\PodcastController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logout', [AuthController::class, 'signOut']);
     // upload video
     Route::post('/videos/upload', [VideosController::class, 'uploadVideo']);
+    //upload podcast
+    Route::post('/podcasts/upload', [PodcastController::class, 'uploadPodcast']);
+    //delete podcast
+    Route::delete('/podcasts/{id}', [PodcastController::class, 'deletePodcast']);
 });
 
 
@@ -55,3 +59,6 @@ Route::get('/videos/user/{id}', [VideosController::class, 'getVideosByUser']);
 
 //search for a video
 Route::get('/videos/search/{query}', [VideosController::class, 'searchVideo']);
+
+//get all podcast by a user
+Route::get('/podcasts/user/{id}', [PodcastController::class, 'getPodcastsByUploader']);

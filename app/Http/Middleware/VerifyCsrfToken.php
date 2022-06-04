@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
         'api/videos/search/{query}',
         'api/videos/cat/{cat}/{subcat}',
         'api/videos/{cat}',
-        
+        'api/podcasts/upload',
+        'api/podcasts/{id}',
     ];
 }

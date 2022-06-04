@@ -27,10 +27,9 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        $userid = Str::random(7).now();
 
         $user = User::create([
-            'user_id'=> $userid,
+            'user_id'=> Str::random(10),
             'fullname' => $account['fullname'],
             'username' => $account['username'],
             'phone' => $account['phone'],
